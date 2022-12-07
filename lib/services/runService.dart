@@ -9,7 +9,7 @@ class RunService {
     _repository = Repository();
   }
   //Save Run
-  SaveRun(Run run) async {
+  saveRun(Run run) async {
     return await _repository.insertData('runningTracker', run.runMap());
   }
 
@@ -19,7 +19,7 @@ class RunService {
   }
 
   //Edit Run
-  UpdateRun(Run run) async {
+  updateRun(Run run) async {
     return await _repository.updateData('runningTracker', run.runMap());
   }
 

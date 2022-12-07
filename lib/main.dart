@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const appName = "Running Tracker";
     return MaterialApp(
-      title: 'Running Tracker',
-      debugShowCheckedModeBanner: false,
+      title: appName,
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        brightness: Brightness.dark,
       ),
       home: const MyHomePage(),
     );
@@ -71,9 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (param) {
           return AlertDialog(
-            title: const Text(
+            title: Text(
               'Are You Sure to Delete',
-              style: TextStyle(color: Colors.teal, fontSize: 20),
+              style: TextStyle(color: Colors.blue[800], fontSize: 20),
             ),
             actions: [
               TextButton(
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('Delete')),
               TextButton(
                   style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: Colors.teal),
+                      primary: Colors.white, backgroundColor: Colors.blue[800]),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -119,9 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 run: _runList[index],
                               )));
                 },
-                leading: const Icon(Icons.person),
-                title: Text(_runList[index].date ?? ''),
-                subtitle: Text(_runList[index].distance.toString()),
+                leading: const Icon(
+                  Icons.run_circle,
+                  size: 48.0,
+                ),
+                isThreeLine: true,
+                title: Text(_runList[index].name ?? ''),
+                subtitle: Text("Date: ${_runList[index].date}"),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -140,9 +144,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
                           });
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.edit,
-                          color: Colors.teal,
+                          color: Colors.blue[800],
                         )),
                     IconButton(
                         onPressed: () {
@@ -168,7 +172,11 @@ class _MyHomePageState extends State<MyHomePage> {
             }
           });
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue[800],
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

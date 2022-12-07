@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:runningtracker/models/run.dart';
 import 'package:runningtracker/services/runService.dart';
 
@@ -11,10 +12,12 @@ class EditRun extends StatefulWidget {
 }
 
 class _EditRunState extends State<EditRun> {
+  final _runNameController = TextEditingController();
   final _runDateController = TextEditingController();
   final _runDistanceController = TextEditingController();
   final _runDurationController = TextEditingController();
   bool _validateName = false;
+  bool _validateDate = false;
   bool _validateDistance = false;
   bool _validateDuration = false;
   final _runService = RunService();
@@ -22,6 +25,7 @@ class _EditRunState extends State<EditRun> {
   @override
   void initState() {
     setState(() {
+      _runNameController.text = widget.run.name ?? '';
       _runDateController.text = widget.run.date ?? '';
       _runDistanceController.text = widget.run.distance.toString();
       _runDurationController.text = widget.run.durationminutes.toString();
@@ -33,7 +37,7 @@ class _EditRunState extends State<EditRun> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SQLite CRUD"),
+        title: const Text("Running Tracker"),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -41,21 +45,49 @@ class _EditRunState extends State<EditRun> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Edit New Run',
+              Text(
+                'Edit Run #${widget.run.id}',
                 style: TextStyle(
                     fontSize: 20,
-                    color: Colors.teal,
+                    color: Colors.blue[800],
                     fontWeight: FontWeight.w500),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               TextField(
-                  controller: _runDateController,
+                controller: _runDateController,
+                decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.calendar_today),
+                    border: OutlineInputBorder(),
+                    hintText: 'Date',
+                    labelText: 'Date'),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
+
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        DateFormat('dd.MM.yyyy').format(pickedDate);
+
+                    setState(() {
+                      _runDateController.text = formattedDate;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              TextField(
+                  controller: _runNameController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Enter Name',
+                    hintText: 'Name',
                     labelText: 'Name',
                     errorText:
                         _validateName ? 'Name Value Can\'t Be Empty' : null,
@@ -67,7 +99,7 @@ class _EditRunState extends State<EditRun> {
                   controller: _runDistanceController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Enter Distance',
+                    hintText: 'Distance',
                     labelText: 'Distance',
                     errorText: _validateDistance
                         ? 'Distance Value Can\'t Be Empty'
@@ -80,7 +112,7 @@ class _EditRunState extends State<EditRun> {
                   controller: _runDurationController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Enter Duration',
+                    hintText: 'Duration',
                     labelText: 'Duration',
                     errorText: _validateDuration
                         ? 'Duration Value Can\'t Be Empty'
@@ -94,10 +126,16 @@ class _EditRunState extends State<EditRun> {
                   TextButton(
                       style: TextButton.styleFrom(
                           primary: Colors.white,
-                          backgroundColor: Colors.teal,
+                          backgroundColor: Colors.blue[800],
                           textStyle: const TextStyle(fontSize: 15)),
                       onPressed: () async {
                         setState(() {
+                          _runNameController.text.isEmpty
+                              ? _validateName = true
+                              : _validateName = false;
+                          _runDateController.text.isEmpty
+                              ? _validateDate = true
+                              : _validateDate = false;
                           _runDateController.text.isEmpty
                               ? _validateName = true
                               : _validateName = false;
@@ -110,10 +148,11 @@ class _EditRunState extends State<EditRun> {
                         });
                         if (_validateName == false &&
                             _validateDistance == false &&
-                            _validateDuration == false) {
-                          // print("Good Data Can Save");
+                            _validateDuration == false &&
+                            _validateDate == false) {
                           var run = Run();
                           run.id = widget.run.id;
+                          run.name = _runNameController.text;
                           run.date = _runDateController.text;
                           run.distance =
                               double.parse(_runDistanceController.text);
@@ -121,7 +160,7 @@ class _EditRunState extends State<EditRun> {
                               int.parse(_runDurationController.text);
                           run.averagespeed =
                               run.distance! / (run.durationminutes! / 60);
-                          var result = await _runService.UpdateRun(run);
+                          var result = await _runService.updateRun(run);
                           Navigator.pop(context, result);
                         }
                       },

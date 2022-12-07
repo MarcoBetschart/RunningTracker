@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:runningtracker/models/run.dart';
 import 'package:runningtracker/services/runService.dart';
 
@@ -11,18 +12,21 @@ class AddRun extends StatefulWidget {
 }
 
 class _AddRunState extends State<AddRun> {
-  var _runDateController = TextEditingController();
-  var _runDistanceController = TextEditingController();
-  var _runDurationController = TextEditingController();
+  final _runNameController = TextEditingController();
+  final _runDateController = TextEditingController();
+  final _runDistanceController = TextEditingController();
+  final _runDurationController = TextEditingController();
   bool _validateName = false;
+  bool _validateDate = false;
   bool _validateDistance = false;
   bool _validateDuration = false;
-  var _runService = RunService();
+  final _runService = RunService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SQLite CRUD"),
+        title: const Text("Running Tracker"),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -30,22 +34,50 @@ class _AddRunState extends State<AddRun> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Add New Run',
                 style: TextStyle(
                     fontSize: 20,
-                    color: Colors.teal,
+                    color: Colors.blue[800],
                     fontWeight: FontWeight.w500),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               TextField(
-                  controller: _runDateController,
-                  keyboardType: TextInputType.datetime,
+                controller: _runDateController,
+                decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.calendar_today),
+                    border: OutlineInputBorder(),
+                    hintText: 'Date',
+                    labelText: 'Date'),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
+
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        DateFormat('dd.MM.yyyy').format(pickedDate);
+
+                    setState(() {
+                      _runDateController.text = formattedDate;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              TextField(
+                  controller: _runNameController,
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Enter Name',
+                    hintText: 'Name',
                     labelText: 'Name',
                     errorText:
                         _validateName ? 'Name Value Can\'t Be Empty' : null,
@@ -56,10 +88,12 @@ class _AddRunState extends State<AddRun> {
               TextField(
                   controller: _runDistanceController,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
+                  ],
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Enter Distance',
+                    hintText: 'Distance',
                     labelText: 'Distance',
                     errorText: _validateDistance
                         ? 'Distance Value Can\'t Be Empty'
@@ -70,9 +104,13 @@ class _AddRunState extends State<AddRun> {
               ),
               TextField(
                   controller: _runDurationController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
+                  ],
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Enter Duration',
+                    hintText: 'Duration',
                     labelText: 'Duration',
                     errorText: _validateDuration
                         ? 'Duration Value Can\'t Be Empty'
@@ -86,13 +124,16 @@ class _AddRunState extends State<AddRun> {
                   TextButton(
                       style: TextButton.styleFrom(
                           primary: Colors.white,
-                          backgroundColor: Colors.teal,
+                          backgroundColor: Colors.blue[800],
                           textStyle: const TextStyle(fontSize: 15)),
                       onPressed: () async {
                         setState(() {
-                          _runDateController.text.isEmpty
+                          _runNameController.text.isEmpty
                               ? _validateName = true
                               : _validateName = false;
+                          _runDateController.text.isEmpty
+                              ? _validateDate = true
+                              : _validateDate = false;
                           _runDistanceController.text.isEmpty
                               ? _validateDistance = true
                               : _validateDistance = false;
@@ -102,8 +143,10 @@ class _AddRunState extends State<AddRun> {
                         });
                         if (_validateName == false &&
                             _validateDistance == false &&
-                            _validateDuration == false) {
+                            _validateDuration == false &&
+                            _validateDate == false) {
                           var run = Run();
+                          run.name = _runNameController.text;
                           run.date = _runDateController.text;
                           run.distance =
                               double.parse(_runDistanceController.text);
@@ -111,7 +154,7 @@ class _AddRunState extends State<AddRun> {
                               double.parse(_runDurationController.text);
                           run.averagespeed =
                               run.distance! / (run.durationminutes! / 60);
-                          var result = await _runService.SaveRun(run);
+                          var result = await _runService.saveRun(run);
                           Navigator.pop(context, result);
                         }
                       },
@@ -126,6 +169,7 @@ class _AddRunState extends State<AddRun> {
                           textStyle: const TextStyle(fontSize: 15)),
                       onPressed: () {
                         _runDateController.text = '';
+                        _runNameController.text = '';
                         _runDistanceController.text = '';
                         _runDurationController.text = '';
                       },

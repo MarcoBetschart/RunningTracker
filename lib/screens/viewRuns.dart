@@ -1,4 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        BuildContext,
+        Colors,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        FontWeight,
+        Key,
+        Padding,
+        Row,
+        Scaffold,
+        SizedBox,
+        State,
+        StatefulWidget,
+        Text,
+        TextStyle,
+        Widget;
 import 'package:runningtracker/models/run.dart';
 
 class ViewRuns extends StatefulWidget {
@@ -18,15 +37,15 @@ class _ViewRunsState extends State<ViewRuns> {
           title: const Text("Running Tracker"),
         ),
         body: Container(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Full Details",
-                style: TextStyle(
+              Text(
+                "Details to run #${widget.run.id}",
+                style: const TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey,
+                    color: Colors.white,
                     fontSize: 20),
               ),
               const SizedBox(
@@ -34,15 +53,15 @@ class _ViewRunsState extends State<ViewRuns> {
               ),
               Row(
                 children: [
-                  const Text('Date',
+                  Text('Date',
                       style: TextStyle(
-                          color: Colors.teal,
+                          color: Colors.blue[800],
                           fontSize: 16,
                           fontWeight: FontWeight.w600)),
                   Padding(
                     padding: const EdgeInsets.only(left: 30),
                     child: Text(widget.run.date ?? '',
-                        style: TextStyle(fontSize: 16)),
+                        style: const TextStyle(fontSize: 16)),
                   ),
                 ],
               ),
@@ -51,36 +70,57 @@ class _ViewRunsState extends State<ViewRuns> {
               ),
               Row(
                 children: [
-                  const Text('Distance',
+                  Text('Distance',
                       style: TextStyle(
-                          color: Colors.teal,
+                          color: Colors.blue[800],
                           fontSize: 16,
                           fontWeight: FontWeight.w600)),
                   Padding(
                     padding: const EdgeInsets.only(left: 25),
-                    child: Text(widget.run.distance.toString(),
-                        style: TextStyle(fontSize: 16)),
+                    child: Text("${widget.run.distance.toString()} km",
+                        style: const TextStyle(fontSize: 16)),
                   ),
                 ],
               ),
               const SizedBox(
                 height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  const Text('Duration',
+                  Text('Duration',
                       style: TextStyle(
-                          color: Colors.teal,
+                          color: Colors.blue[800],
                           fontSize: 16,
                           fontWeight: FontWeight.w600)),
-                  const SizedBox(
-                    height: 20,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: Text(
+                        "${widget.run.durationminutes.toString()} minutes",
+                        style: const TextStyle(fontSize: 16)),
                   ),
-                  Text(widget.run.durationminutes.toString(),
-                      style: const TextStyle(fontSize: 16)),
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Text('Average speed',
+                      style: TextStyle(
+                          color: Colors.blue[800],
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: Text(
+                        "${widget.run.averagespeed!.toStringAsFixed(2)} km/h",
+                        style: const TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ));
