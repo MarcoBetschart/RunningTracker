@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         var runModel = Run();
         runModel.id = run['id'];
+        runModel.name = run['name'];
         runModel.date = run['date'];
         runModel.distance = run['distance'];
         runModel.durationminutes = run['durationminutes'];
@@ -121,9 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 leading: const Icon(
                   Icons.run_circle,
-                  size: 48.0,
+                  size: 56.0,
                 ),
-                isThreeLine: true,
                 title: Text(_runList[index].name ?? ''),
                 subtitle: Text("Date: ${_runList[index].date}"),
                 trailing: Row(

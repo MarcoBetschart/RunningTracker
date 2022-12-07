@@ -53,6 +53,23 @@ class _ViewRunsState extends State<ViewRuns> {
               ),
               Row(
                 children: [
+                  Text('Name',
+                      style: TextStyle(
+                          color: Colors.blue[800],
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Text(widget.run.name ?? '',
+                        style: const TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
                   Text('Date',
                       style: TextStyle(
                           color: Colors.blue[800],
