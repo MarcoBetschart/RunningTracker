@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:runningtracker/models/run.dart';
+import 'package:runningtracker/screens/distanceChart.dart';
 import 'package:runningtracker/screens/addRun.dart';
+import 'package:runningtracker/screens/averageSpeedChart.dart';
 import 'package:runningtracker/screens/editRun.dart';
 import 'package:runningtracker/screens/viewRuns.dart';
 import 'package:runningtracker/services/runService.dart';
@@ -211,9 +213,22 @@ class DrawerWidget extends StatelessWidget {
         leading: const Icon(
           Icons.line_axis_outlined,
         ),
-        title: const Text('Diagram'),
+        title: const Text('Average speed analysis'),
         onTap: () {
-          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AverageSpeedChart()));
+        },
+      ),
+      ListTile(
+        leading: const Icon(
+          Icons.bar_chart,
+        ),
+        title: const Text('Distance analysis'),
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DistanceChart()));
         },
       ),
       const AboutListTile(
