@@ -6,11 +6,11 @@ import 'package:runningtracker/screens/viewRuns.dart';
 import 'package:runningtracker/services/runService.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const RunningTrackerHome());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class RunningTrackerHome extends StatelessWidget {
+  const RunningTrackerHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,80 +104,134 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Running Tracker"),
-      ),
-      body: ListView.builder(
-          itemCount: _runList.length,
-          itemBuilder: (context, index) {
-            return Card(
-              child: ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ViewRuns(
-                                run: _runList[index],
-                              )));
-                },
-                leading: const Icon(
-                  Icons.run_circle,
-                  size: 56.0,
-                ),
-                title: Text(_runList[index].name ?? ''),
-                subtitle: Text("Date: ${_runList[index].date}"),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditRun(
-                                        run: _runList[index],
-                                      ))).then((data) {
-                            if (data != null) {
-                              getAllRunDetails();
-                              _showSuccessSnackBar(
-                                  'Run Detail Updated Success');
-                            }
-                          });
-                        },
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.blue[800],
-                        )),
-                    IconButton(
-                        onPressed: () {
-                          _deleteFormDialog(context, _runList[index].id);
-                        },
-                        icon: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ))
-                  ],
-                ),
-              ),
-            );
-          }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AddRun()))
-              .then((data) {
-            if (data != null) {
-              getAllRunDetails();
-              _showSuccessSnackBar('Run Detail Added Success');
-            }
-          });
-        },
-        backgroundColor: Colors.blue[800],
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
+        appBar: AppBar(
+          title: const Text("Running Tracker"),
         ),
+        body: ListView.builder(
+            itemCount: _runList.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ViewRuns(
+                                  run: _runList[index],
+                                )));
+                  },
+                  leading: const Icon(
+                    Icons.run_circle_outlined,
+                    size: 56.0,
+                  ),
+                  title: Text(_runList[index].name ?? ''),
+                  subtitle: Text("Date: ${_runList[index].date}"),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditRun(
+                                          run: _runList[index],
+                                        ))).then((data) {
+                              if (data != null) {
+                                getAllRunDetails();
+                                _showSuccessSnackBar(
+                                    'Run Detail Updated Success');
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue[800],
+                          )),
+                      IconButton(
+                          onPressed: () {
+                            _deleteFormDialog(context, _runList[index].id);
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ))
+                    ],
+                  ),
+                ),
+              );
+            }),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const AddRun()))
+                .then((data) {
+              if (data != null) {
+                getAllRunDetails();
+                _showSuccessSnackBar('Run Detail Added Success');
+              }
+            });
+          },
+          backgroundColor: Colors.blue[800],
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+        endDrawer: const DrawerWidget());
+  }
+}
+
+class DrawerWidget extends StatelessWidget {
+  const DrawerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+        child: ListView(padding: EdgeInsets.zero, children: [
+      const UserAccountsDrawerHeader(
+        decoration: BoxDecoration(
+          color: Colors.red,
+        ),
+        accountName: Text("Running Tracker"),
+        accountEmail: Text("marco.betschart98@bluewin.ch"),
       ),
-    );
+      ListTile(
+        leading: const Icon(
+          Icons.run_circle_outlined,
+        ),
+        title: const Text('All runs'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        leading: const Icon(
+          Icons.line_axis_outlined,
+        ),
+        title: const Text('Diagram'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      const AboutListTile(
+        icon: Icon(
+          Icons.info,
+        ),
+        applicationIcon: Icon(
+          Icons.local_play,
+        ),
+        applicationName: 'Running Tracker',
+        applicationVersion: '1.0.0',
+        applicationLegalese: '2023 © Marco Betschart',
+        aboutBoxChildren: [
+          SizedBox(height: 24),
+          Text(
+              "The running tracker was created in case of a school project at HFIE.")
+        ],
+      ),
+    ]));
   }
 }
