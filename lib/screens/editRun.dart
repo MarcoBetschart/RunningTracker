@@ -34,6 +34,7 @@ import 'package:runningtracker/models/run.dart';
 import 'package:runningtracker/services/runService.dart';
 
 class EditRun extends StatefulWidget {
+  /// Run to be edited
   final Run run;
   const EditRun({Key? key, required this.run}) : super(key: key);
 
@@ -42,14 +43,19 @@ class EditRun extends StatefulWidget {
 }
 
 class _EditRunState extends State<EditRun> {
+  /// Controllers for validation
   final _runNameController = TextEditingController();
   final _runDateController = TextEditingController();
   final _runDistanceController = TextEditingController();
   final _runDurationController = TextEditingController();
+
+  /// Validation flag
   bool _validateName = false;
   bool _validateDate = false;
   bool _validateDistance = false;
   bool _validateDuration = false;
+
+  /// Service for CRUD functions
   final _runService = RunService();
 
   @override

@@ -23,6 +23,7 @@ import 'package:flutter/material.dart'
 import 'package:runningtracker/models/run.dart';
 
 class ViewRuns extends StatefulWidget {
+  /// Run to be edited
   final Run run;
 
   const ViewRuns({Key? key, required this.run}) : super(key: key);

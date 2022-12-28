@@ -42,14 +42,19 @@ class AddRun extends StatefulWidget {
 }
 
 class _AddRunState extends State<AddRun> {
+  /// Controllers for validation
   final _runNameController = TextEditingController();
   final _runDateController = TextEditingController();
   final _runDistanceController = TextEditingController();
   final _runDurationController = TextEditingController();
+
+  /// Validation flag
   bool _validateName = false;
   bool _validateDate = false;
   bool _validateDistance = false;
   bool _validateDuration = false;
+
+  /// Service for CRUD functions
   final _runService = RunService();
 
   @override

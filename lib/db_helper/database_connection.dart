@@ -3,7 +3,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+/// Class that represents connection to database or creates the database
 class DatabaseConnection {
+  /// Set database to SQLite db
   Future<Database> setDatabase() async {
     var directory = await getApplicationDocumentsDirectory();
     var path = p.join(directory.path, 'runningTracker');
@@ -12,6 +14,7 @@ class DatabaseConnection {
     return database;
   }
 
+  /// Creates db
   Future<void> _createDatabase(Database database, int version) async {
     String sql =
         "CREATE TABLE runningTracker (id INTEGER PRIMARY KEY, name TEXT NOT NULL,date TEXT NOT NULL,distance REAL NOT NULL,durationminutes REAL NOT NULL,averagespeed REAL NOT NULL);";

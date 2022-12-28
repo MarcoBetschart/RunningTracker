@@ -6,6 +6,7 @@ import 'package:runningtracker/screens/averageSpeedChart.dart';
 import 'package:runningtracker/screens/editRun.dart';
 import 'package:runningtracker/screens/viewRuns.dart';
 import 'package:runningtracker/services/runService.dart';
+// ignore: unused_import
 import 'package:dcdg/dcdg.dart';
 
 void main() {
@@ -17,9 +18,8 @@ class RunningTrackerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appName = "Running Tracker";
     return MaterialApp(
-      title: appName,
+      title: "Running Tracker",
       theme: ThemeData(
         brightness: Brightness.dark,
       ),
@@ -36,9 +36,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  /// List with all saved runs
   late List<Run> _runList = <Run>[];
+
+  /// Service to make CRUD functions
   final _runService = RunService();
 
+  /// Gets all saved runs from database
   getAllRunDetails() async {
     var runs = await _runService.readAllRuns();
     _runList = <Run>[];
@@ -62,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  /// Shows state of application with snackbar
   _showSuccessSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -70,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  /// Show dialog box if user is sure to delete run
   _deleteFormDialog(BuildContext context, runId) {
     return showDialog(
         context: context,
@@ -188,6 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+/// Widget to show menubutton and menu
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
     Key? key,

@@ -24,9 +24,13 @@ class AverageSpeedChart extends StatefulWidget {
 }
 
 class _AverageSpeedChartState extends State<AverageSpeedChart> {
+  /// All saved runs
   late List<Run> _runList = <Run>[];
+
+  /// Service for CRUD functions
   final _runService = RunService();
 
+  /// Gets all saved runs
   getAllRunDetails() async {
     var runs = await _runService.readAllRuns();
     _runList = <Run>[];

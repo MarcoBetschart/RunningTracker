@@ -25,9 +25,13 @@ class DistanceChart extends StatefulWidget {
 }
 
 class _DistanceChartState extends State<DistanceChart> {
+  /// All saved runs
   late List<Run> _runList = <Run>[];
+
+  /// Service for CRUD functions
   final _runService = RunService();
 
+  /// Gets all saved runs
   getAllRunDetails() async {
     var runs = await _runService.readAllRuns();
     _runList = <Run>[];
