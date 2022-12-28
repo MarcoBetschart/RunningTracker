@@ -73,6 +73,7 @@ class _AddRunState extends State<AddRun> {
                 height: 20.0,
               ),
               TextField(
+                  key: const Key("name"),
                   controller: _runNameController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -86,6 +87,7 @@ class _AddRunState extends State<AddRun> {
                 height: 20.0,
               ),
               TextField(
+                  key: const Key("duration"),
                   controller: _runDistanceController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [

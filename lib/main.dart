@@ -8,7 +8,7 @@ import 'package:runningtracker/screens/viewRuns.dart';
 import 'package:runningtracker/services/runService.dart';
 
 void main() {
-  runApp(const RunningTrackerHome());
+  runApp(const MaterialApp(home: RunningTrackerHome()));
 }
 
 class RunningTrackerHome extends StatelessWidget {
