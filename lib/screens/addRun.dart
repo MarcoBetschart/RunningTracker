@@ -1,4 +1,34 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        BuildContext,
+        Colors,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        FontWeight,
+        Icon,
+        Icons,
+        InputDecoration,
+        Key,
+        Navigator,
+        OutlineInputBorder,
+        Row,
+        Scaffold,
+        SingleChildScrollView,
+        SizedBox,
+        State,
+        StatefulWidget,
+        Text,
+        TextButton,
+        TextEditingController,
+        TextField,
+        TextInputType,
+        TextStyle,
+        Widget,
+        showDatePicker;
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:runningtracker/models/run.dart';
@@ -125,7 +155,7 @@ class _AddRunState extends State<AddRun> {
                 children: [
                   TextButton(
                       style: TextButton.styleFrom(
-                          primary: Colors.white,
+                          foregroundColor: Colors.white,
                           backgroundColor: Colors.blue[800],
                           textStyle: const TextStyle(fontSize: 15)),
                       onPressed: () async {
@@ -157,6 +187,7 @@ class _AddRunState extends State<AddRun> {
                           run.averagespeed =
                               run.distance! / (run.durationminutes! / 60);
                           var result = await _runService.saveRun(run);
+                          // ignore: use_build_context_synchronously
                           Navigator.pop(context, result);
                         }
                       },
@@ -166,7 +197,7 @@ class _AddRunState extends State<AddRun> {
                   ),
                   TextButton(
                       style: TextButton.styleFrom(
-                          primary: Colors.white,
+                          foregroundColor: Colors.white,
                           backgroundColor: Colors.red,
                           textStyle: const TextStyle(fontSize: 15)),
                       onPressed: () {

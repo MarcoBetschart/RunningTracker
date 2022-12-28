@@ -7,7 +7,7 @@ class Run {
   num? averagespeed;
 
   runMap() {
-    var mapping = Map<String, dynamic>();
+    var mapping = <String, dynamic>{};
     mapping['id'] = id;
     mapping['name'] = name;
     mapping['date'] = date;

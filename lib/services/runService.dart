@@ -1,6 +1,6 @@
-import 'dart:async';
+// ignore_for_file: file_names
 
-import 'package:runningtracker/db_helper/repository.dart';
+import 'package:runningtracker/db_helper/repository.dart' show Repository;
 import 'package:runningtracker/models/run.dart';
 
 class RunService {

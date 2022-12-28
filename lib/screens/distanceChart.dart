@@ -1,9 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart'
     show
         AppBar,
         BuildContext,
         Center,
-        Container,
         Key,
         Scaffold,
         State,
@@ -11,7 +12,6 @@ import 'package:flutter/material.dart'
         Text,
         TextStyle,
         Widget;
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:runningtracker/models/run.dart';
 
@@ -48,6 +48,7 @@ class _DistanceChartState extends State<DistanceChart> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(

@@ -1,11 +1,12 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class DatabaseConnection {
   Future<Database> setDatabase() async {
     var directory = await getApplicationDocumentsDirectory();
-    var path = join(directory.path, 'runningTracker');
+    var path = p.join(directory.path, 'runningTracker');
     var database =
         await openDatabase(path, version: 1, onCreate: _createDatabase);
     return database;

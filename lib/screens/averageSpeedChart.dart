@@ -1,9 +1,9 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart'
     show
         AppBar,
         BuildContext,
         Center,
-        Container,
         Key,
         Scaffold,
         State,
@@ -47,21 +47,21 @@ class _AverageSpeedChartState extends State<AverageSpeedChart> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Running Tracker"),
         ),
         body: Center(
-            child: Container(
-                child: SfCartesianChart(
-                    title: ChartTitle(text: 'Average speed in km/h'),
-                    legend: Legend(isVisible: true),
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    primaryXAxis: CategoryAxis(),
-                    primaryYAxis: NumericAxis(
-                        numberFormat: NumberFormat.decimalPattern()),
-                    series: <LineSeries<Run, String>>[
+            child: SfCartesianChart(
+                title: ChartTitle(text: 'Average speed in km/h'),
+                legend: Legend(isVisible: true),
+                tooltipBehavior: TooltipBehavior(enable: true),
+                primaryXAxis: CategoryAxis(),
+                primaryYAxis:
+                    NumericAxis(numberFormat: NumberFormat.decimalPattern()),
+                series: <LineSeries<Run, String>>[
               // Initialize line series.
               LineSeries<Run, String>(
                   name: 'Average speed (km/h)',
@@ -69,6 +69,6 @@ class _AverageSpeedChartState extends State<AverageSpeedChart> {
                   dataSource: _runList,
                   xValueMapper: (Run run, _) => run.date,
                   yValueMapper: (Run run, _) => run.averagespeed)
-            ]))));
+            ])));
   }
 }

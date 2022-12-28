@@ -81,10 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [
               TextButton(
                   style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: Colors.red),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.red),
                   onPressed: () async {
                     var result = await _runService.deleteRun(runId);
                     if (result != null) {
+                      // ignore: use_build_context_synchronously
                       Navigator.pop(context);
                       getAllRunDetails();
                       _showSuccessSnackBar('Run Detail Deleted Success');
@@ -93,7 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('Delete')),
               TextButton(
                   style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: Colors.blue[800]),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue[800]),
                   onPressed: () {
                     Navigator.pop(context);
                   },
