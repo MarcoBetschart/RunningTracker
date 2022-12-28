@@ -6,6 +6,7 @@ import 'package:runningtracker/screens/averageSpeedChart.dart';
 import 'package:runningtracker/screens/editRun.dart';
 import 'package:runningtracker/screens/viewRuns.dart';
 import 'package:runningtracker/services/runService.dart';
+import 'package:dcdg/dcdg.dart';
 
 void main() {
   runApp(const MaterialApp(home: RunningTrackerHome()));
