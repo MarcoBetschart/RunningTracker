@@ -126,7 +126,7 @@ class _EditRunState extends State<EditRun> {
                     hintText: 'Name',
                     labelText: 'Name',
                     errorText:
-                        _validateName ? 'Name Value Can\'t Be Empty' : null,
+                        _validateName ? 'Name value can\'t be empty' : null,
                   )),
               const SizedBox(
                 height: 20.0,
@@ -138,20 +138,21 @@ class _EditRunState extends State<EditRun> {
                     hintText: 'Distance',
                     labelText: 'Distance',
                     errorText: _validateDistance
-                        ? 'Distance Value Can\'t Be Empty'
+                        ? 'Distance value can\'t be empty'
                         : null,
                   )),
               const SizedBox(
                 height: 20.0,
               ),
               TextField(
+                  key: const Key("duration"),
                   controller: _runDurationController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: 'Duration',
                     labelText: 'Duration',
                     errorText: _validateDuration
-                        ? 'Duration Value Can\'t Be Empty'
+                        ? 'Duration value can\'t be empty'
                         : null,
                   )),
               const SizedBox(
