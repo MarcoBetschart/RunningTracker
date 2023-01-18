@@ -46,7 +46,7 @@ class Repository {
         ?.update(table, data, where: 'id=?', whereArgs: [data['id']]);
   }
 
-  //Delete run
+  /// Delete run
   deleteDataById(table, itemId) async {
     var connection = await database;
     return await connection?.rawDelete("delete from $table where id=$itemId");
