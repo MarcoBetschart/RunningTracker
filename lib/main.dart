@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     var result = await _runService.deleteRun(runId);
                     if (result != null) {
                       // ignore: use_build_context_synchronously
-                      Navigator.pop(context);
+                      Navigator.of(context, rootNavigator: true).pop();
                       getAllRunDetails();
                       _showSuccessSnackBar('Run Detail Deleted Success');
                     }
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue[800]),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.of(context, rootNavigator: true).pop();
                   },
                   child: const Text('Close'))
             ],
@@ -217,7 +217,7 @@ class DrawerWidget extends StatelessWidget {
         ),
         title: const Text('All runs'),
         onTap: () {
-          Navigator.pop(context);
+          Navigator.of(context, rootNavigator: true).pop();
         },
       ),
       ListTile(

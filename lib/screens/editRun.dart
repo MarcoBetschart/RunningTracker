@@ -194,7 +194,7 @@ class _EditRunState extends State<EditRun> {
                           run.distance =
                               double.parse(_runDistanceController.text);
                           run.durationminutes =
-                              int.parse(_runDurationController.text);
+                              double.parse(_runDurationController.text);
                           run.averagespeed =
                               run.distance! / (run.durationminutes! / 60);
                           var result = await _runService.updateRun(run);
